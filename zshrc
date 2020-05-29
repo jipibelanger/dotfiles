@@ -65,6 +65,8 @@ alias gco='git checkout'
 # [[ "$TMUX" == "" ]] && {tmux new-session -s tmux}  # tmux
 alias tm="tmux new-session -s tmux"
 alias ktm="tmux kill-server"
+# redirects DISPLAY to localhost for WSL
+export DISPLAY=localhost:0.0
 
 # # python environment
 # export PYENV_ROOT="$HOME/.pyenv"
@@ -74,9 +76,6 @@ alias ktm="tmux kill-server"
 # pyenv virtualenvwrapper_lazy
 # # poetry
 # export PATH="$HOME/.poetry/bin:$PATH"
-
-# redirects DISPLAY to localhost for WSL
-export DISPLAY=localhost:0.0
 
 #
 # Zinit configuration
@@ -107,3 +106,8 @@ zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
     atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
 zinit light trapd00r/LS_COLORS
+
+zinit ice atclone'PYENV_ROOT="$PWD" ./libexec/pyenv init - > zpyenv.zsh' \
+    atinit'export PYENV_ROOT="$PWD"' atpull"%atclone" \
+    as'command' pick'bin/pyenv' src"zpyenv.zsh" nocompile'!'
+zinit light pyenv/pyenv

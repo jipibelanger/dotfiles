@@ -1,6 +1,6 @@
 #!/bin/bash
-if [[ ! "${OSTYPE}" == "linux-gnu"* || "${OSTYPE}" == "darwin"* ]]; then
-  "${OSTYPE} not supported. Aborting."
+if [[ "${OSTYPE}" != "linux-gnu"* && "${OSTYPE}" != "darwin"* ]]; then
+  echo "${OSTYPE} not supported. Aborting."
   exit 1
 fi
 
@@ -15,7 +15,7 @@ ln -s "${HOME}/dotfiles/configs/nvim" "${HOME}/.config/"
 ln -s "${HOME}/dotfiles/configs/git" "${HOME}/.config/"
 
 # generate ssh keys
-echo "Generating default SSH identity. Press Enter 3 times."
+echo "Generating jp@$(uname -n) SSH identity. Press Enter 3 times."
 if [[ ! -f "${HOME}/.ssh/id_rsa" ]]; then
   ssh-keygen -C "jp@$(uname -n)"
 fi
