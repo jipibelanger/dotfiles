@@ -1,12 +1,13 @@
 #!/bin/bash
-
+if [[ ! "${OSTYPE}" == "linux-gnu"* || "${OSTYPE}" == "darwin"* ]]; then
+  "${OSTYPE} not supported. Aborting."
+  exit 1
+fi
 
 # setup home directory structure
-echo "Setting up home directory"
-mkdir -pv "${HOME}/workspaces" "${HOME}/.config"
+command mkdir -pv "${HOME}/workspaces" "${HOME}/.config"
 
 # symbolic links
-echo "Linking dotfiles"
 ln -s "${HOME}/dotfiles/zshrc" "${HOME}/.zshrc"
 ln -s "${HOME}/dotfiles/p10k.zsh" "${HOME}/.p10k.zsh"
 ln -s "${HOME}/dotfiles/tmux.conf" "${HOME}/.tmux.conf"
@@ -14,6 +15,7 @@ ln -s "${HOME}/dotfiles/configs/nvim" "${HOME}/.config/"
 ln -s "${HOME}/dotfiles/configs/git" "${HOME}/.config/"
 
 # generate ssh keys
+echo "Generating default SSH identity. Press Enter 3 times."
 if [[ ! -f "${HOME}/.ssh/id_rsa" ]]; then
   ssh-keygen -C "jp@$(uname -n)"
 fi
@@ -28,9 +30,6 @@ if [[ "${OSTYPE}" == "linux-gnu"* ]]; then
 elif [[ "${OSTYPE}" == "darwin"* ]]; then
   echo "Installing for ${OSTYPE}"
   xcode-select --install
-else
-  "No base packages list to install for OS: ${OSTYPE}. Aborting."
-  exit 1
 fi
 
 # ZSH setup
@@ -38,12 +37,6 @@ if [[ -x "$(command -v zsh)" ]]; then
   echo "Setting up ZSH"
   if [[ "${SHELL}" != *"zsh" ]]; then
     chsh -s $(command -v zsh);
-  fi
-  if [[ ! -d "${HOME}/.zinit/" ]]; then
-    # install zinit
-    echo "Installing zinit"
-    mkdir -p "${HOME}/.zinit/"
-    git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
   fi
 fi
 

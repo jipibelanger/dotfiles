@@ -2,10 +2,14 @@
 
 
 echo "Installing pyenv build environment"
-sudo apt-get install --no-install-recommends \
-  make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
-  libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev \
-  libxmlsec1-dev libffi-dev liblzma-dev
+if [[ "${OSTYPE}" == "linux-gnu"* ]]; then
+  sudo apt-get install --no-install-recommends \
+    make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
+    libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev \
+    libxmlsec1-dev libffi-dev liblzma-dev
+elif [[ "${OSTYPE}" == "darwin"* ]]; then
+  brew install openssl readline sqlite3 xz zlib
+fi
 
 # setup pyenv
 echo "Installing python environment"
@@ -17,5 +21,7 @@ echo "Recent versions of Python3 available:"
 pyenv install --list | grep "[[:space:]]3." | tail -n20
 echo "Versions currently installed:"
 pyenv versions
-read -p "Python version to install: " PYVERSION
-pyenv install "${PYVERSION}"
+if [[ $(read -p "Install new python version [y]?:") -eq "y" ]]; then
+  read -p "Python version to install: " PYVERSION
+  pyenv install "${PYVERSION}"
+fi
