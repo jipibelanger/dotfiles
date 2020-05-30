@@ -68,12 +68,15 @@ alias ktm="tmux kill-server"
 # redirects DISPLAY to localhost for WSL
 export DISPLAY=localhost:0.0
 
-# # python environment
-# export PYENV_ROOT="$HOME/.pyenv"
-# export PATH="$PYENV_ROOT/bin:$PATH"
-# export WORKON_HOME=~/.ve
-# eval "$(pyenv init -)"
-# pyenv virtualenvwrapper_lazy
+# python environment
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+[[ -x "$(command -v pyenv)" ]] && {
+  eval "$(pyenv init -)"
+}
+[[ -x "$(command -v pyenv virtualenv)" ]] && {
+  eval "$(pyenv virtualenv-init -)"
+}
 # # poetry
 # export PATH="$HOME/.poetry/bin:$PATH"
 
@@ -83,7 +86,7 @@ export DISPLAY=localhost:0.0
 
 [[ ! -f ~/.zinit/bin/zinit.zsh ]] && {
   command mkdir -p "${HOME}/.zinit"
-  chmod 755 "${HOME}/.zinit"
+  command chmod 755 "${HOME}/.zinit"
   command git clone https://github.com/zdharma/zinit "${HOME}/.zinit/bin"
 }
 
@@ -103,11 +106,6 @@ zinit wait lucid light-mode for \
 
 # ls_colors: https://zdharma.org/zinit/wiki/LS_COLORS-explanation/
 zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-    atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
+  atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+  atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
 zinit light trapd00r/LS_COLORS
-
-zinit ice atclone'PYENV_ROOT="$PWD" ./libexec/pyenv init - > zpyenv.zsh' \
-    atinit'export PYENV_ROOT="$PWD"' atpull"%atclone" \
-    as'command' pick'bin/pyenv' src"zpyenv.zsh" nocompile'!'
-zinit light pyenv/pyenv

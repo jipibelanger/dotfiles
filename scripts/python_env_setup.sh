@@ -15,13 +15,3 @@ fi
 echo "Installing python environment"
 brew install pyenv
 brew install pyenv-virtualenv
-
-# setup base python interpreter version
-echo "Recent versions of Python3 available:"
-pyenv install --list | grep "[[:space:]]3." | tail -n20
-echo "Versions currently installed:"
-pyenv versions
-if [[ $(read -p "Install new python version [y]?:") -eq "y" ]]; then
-  read -p "Python version to install: " PYVERSION
-  pyenv install "${PYVERSION}"
-fi
