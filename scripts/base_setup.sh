@@ -25,14 +25,14 @@ echo "Installing base packages"
 if [[ "${OSTYPE}" == "linux-gnu"* ]]; then
   echo "Installing for ${OSTYPE}"
   sudo apt-get update && sudo apt-get upgrade
-  sudo apt-get install -y --no-install-recommends "${UBUNTU_PKGS}"
+  sudo apt-get install -y --no-install-recommends ${UBUNTU_PKGS}
 elif [[ "${OSTYPE}" == "darwin"* ]]; then
   echo "Installing for ${OSTYPE}"
   xcode-select --install
   echo "Installing Homebrew"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-  echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.zprofile
-  brew install "${MACOS_PKGS}"
+  echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> ~/.zprofile
+  brew install ${MACOS_PKGS}
 fi
 
 # make ZSH the default shell
