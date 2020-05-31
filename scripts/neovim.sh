@@ -13,7 +13,7 @@ if [[ ! -x "$(command -v nvim)" ]]; then
   cd ${REPODIR}
   make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr/local/
   sudo make install
-  rm -rf ${REPODIR}
+  cd .. && rm -rf ${REPODIR}
   # install dein
   curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > "${HOME}/dein_installer.sh"
   sh "${HOME}/dein_installer.sh" "${HOME}/.cache/dein"
