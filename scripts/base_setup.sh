@@ -2,7 +2,7 @@
 
 
 UBUNTU_PKGS="build-essential zsh tmux"
-MACOS_PKGS="gcc zsh tmux"
+MACOS_PKGS="gcc zsh tmux coreutils"
 
 # setup home directory structure
 command mkdir -pv "${HOME}/workspaces" "${HOME}/.config"
