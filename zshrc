@@ -46,10 +46,10 @@ alias cp="cp -i"
 alias ln="ln -i"
 alias du="du -h"
 # ls output
-if [[ "$OSTYPE" == "darwin"* ]]; then
+[[ "$OSTYPE" == "darwin"* ]] && {
   # use gnu-coreutils on MacOS
   PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-fi
+}
 alias ls="ls --group-directories-first --color=auto"
 alias l='ls -1A'  # one column, hidden files.
 alias ll='ls -lh' # human readable sizes.
