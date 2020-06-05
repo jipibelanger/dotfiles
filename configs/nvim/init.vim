@@ -8,27 +8,25 @@ if dein#load_state('~/.cache/dein')
 
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/denite.nvim')
-  call dein#add('godlygeek/tabular')
-  call dein#add('plasticboy/vim-markdown')
   call dein#add('altercation/vim-colors-solarized')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('ctrlpvim/ctrlp.vim')
+  call dein#add('scrooloose/nerdtree')
   call dein#add('tpope/vim-surround')
   call dein#add('tpope/vim-commentary')
   call dein#add('tpope/vim-fugitive')
   call dein#add('mhinz/vim-signify')
-  call dein#add('Vigemus/iron.nvim')
   call dein#add('w0rp/ale')
-  call dein#add('scrooloose/nerdtree')
-  call dein#add('ncm2/ncm2')
+  call dein#add('Vigemus/iron.nvim')
   call dein#add('roxma/nvim-yarp')
-  call dein#add('ncm2/ncm2-tmux')
+  call dein#add('ncm2/ncm2')
   call dein#add('ncm2/ncm2-path')
   call dein#add('ncm2/ncm2-jedi', {'on_ft': ['python']})
-  call dein#add('ncm2/ncm2-pyclang', {'on_ft': ['c', 'cpp']})
   call dein#add('ncm2/ncm2-racer', {'on_ft': ['rust']})
   call dein#add('vimscript/toml', {'on_ft': ['toml']})
+  call dein#add('godlygeek/tabular')
+  call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown']})
 
   call dein#end()
   call dein#save_state()
@@ -94,6 +92,10 @@ set noswapfile
 let mapleader=","
 let maplocalleader=",,"
 
+" jk to escape insert mode
+inoremap jk <esc>
+inoremap <esc> <nop>
+
 " Paste from clipboard
 noremap <leader>p "+p
 noremap <leader>y "+y
@@ -116,10 +118,6 @@ nnoremap <leader>q :q<CR>
 
 " Disable ex mode
 nnoremap Q <nop>
-
-" jk to escape insert mode
-inoremap jk <esc>
-inoremap <esc> <nop>
 
 " keymap edit/source vimrc
 nnoremap <leader>ev :split $MYVIMRC<CR>
@@ -207,20 +205,8 @@ let g:ale_completion_enabled = 0
 " NERDTree
 nnoremap <silent> <F2> :NERDTree<CR>
 
-" merlin
-augroup opam_merlin_setup
-  au!
-  au FileType ocaml
-    \ let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-    \ | execute "set rtp+=" . g:opamshare . "/merlin/vim"
-augroup END
-
 " ncm2
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
-
-"ncm2-pyclang
-let g:ncm2_pyclang#library_path = '/home/linuxbrew/.linuxbrew/opt/llvm/lib/libclang.so.9'
-autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
 
 " }}}
