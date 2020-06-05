@@ -22,10 +22,9 @@ if [[ ! -x "$(command -v nvim)" ]]; then
   curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > "${HOME}/dein_installer.sh"
   sh "${HOME}/dein_installer.sh" "${HOME}/.cache/dein"
   rm -f "${HOME}/dein_installer.sh"
-else
+else  # uninstall if found
+  echo "Uninstalling Neovim"
   if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    # uninstall if found
-    echo "Uninstalling Neovim"
     sudo rm -f /usr/local/bin/nvim
     sudo rm -rf /usr/local/share/nvim/
   elif [[ "$OSTYPE" == "darwin"* ]]; then
