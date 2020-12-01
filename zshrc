@@ -6,6 +6,36 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 #
+# Zinit configuration
+#
+
+[[ ! -f ~/.zinit/bin/zinit.zsh ]] && {
+  command mkdir -p "${HOME}/.zinit"
+  command chmod 755 "${HOME}/.zinit"
+  command git clone https://github.com/zdharma/zinit "${HOME}/.zinit/bin"
+}
+
+source "${HOME}/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# prompt
+zinit ice atload'!source "${HOME}/.p10k.zsh"' lucid nocd
+zinit light romkatv/powerlevel10k
+
+# ls_colors: https://zdharma.org/zinit/wiki/LS_COLORS-explanation/
+zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+  atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+  atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
+zinit light trapd00r/LS_COLORS
+
+# pyenv: https://zdharma.org/zinit/wiki/GALLERY/
+zinit ice atclone'PYENV_ROOT="$HOME/.pyenv" ./libexec/pyenv init - > zpyenv.zsh' \
+    atinit'export PYENV_ROOT="$HOME/.pyenv"' atpull"%atclone" \
+    as'command' pick'bin/pyenv' src"zpyenv.zsh" nocompile'!'
+zinit light pyenv/pyenv
+
+#
 # ZSH settings
 #
 
@@ -69,55 +99,9 @@ alias gco='git checkout'
 # [[ "$TMUX" == "" ]] && {tmux new-session -s tmux}  # tmux
 alias tm="tmux new-session -s tmux"
 alias ktm="tmux kill-server"
-# redirects DISPLAY to localhost for WSL
-# export DISPLAY=localhost:0.0
 
-# # python environment
+# python environment
 export PATH="$HOME/.poetry/bin:$PATH"  # poetry
-# export PYENV_ROOT="$HOME/.pyenv"
-# export PATH="$PYENV_ROOT/bin:$PATH"
-# [[ -x "$(command -v pyenv)" ]] && {
-#   eval "$(pyenv init -)"
-# }
-# [[ -x "$(command -v pyenv virtualenv)" ]] && {
-#   eval "$(pyenv virtualenv-init -)"
-# }
 
-#
-# Zinit configuration
-#
-
-[[ ! -f ~/.zinit/bin/zinit.zsh ]] && {
-  command mkdir -p "${HOME}/.zinit"
-  command chmod 755 "${HOME}/.zinit"
-  command git clone https://github.com/zdharma/zinit "${HOME}/.zinit/bin"
-}
-
-source "${HOME}/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-# prompt
-zinit ice atload'!source "${HOME}/.p10k.zsh"' lucid nocd
-zinit light romkatv/powerlevel10k
-
-# completions: https://zdharma.org/zinit/wiki/Example-Minimal-Setup/
-zinit wait lucid light-mode for \
-  atinit"zicompinit; zicdreplay" \
-  blockf atpull'zinit creinstall -q .' \
-      zinit light zsh-users/zsh-completions
-
-
-# ls_colors: https://zdharma.org/zinit/wiki/LS_COLORS-explanation/
-zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-  atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-  atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
-zinit light trapd00r/LS_COLORS
-
-# pyenv: https://zdharma.org/zinit/wiki/GALLERY/
-zinit ice atclone'PYENV_ROOT="$HOME/.pyenv" ./libexec/pyenv init - > zpyenv.zsh' \
-    atinit'export PYENV_ROOT="$HOME/.pyenv"' atpull"%atclone" \
-    as'command' pick'bin/pyenv' src"zpyenv.zsh" nocompile'!'
-zinit light pyenv/pyenv
-
+# project(s) aliases
 alias pj="cd ~/workspaces/resolve/sentinel/market_data"
