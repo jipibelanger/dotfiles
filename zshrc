@@ -99,6 +99,8 @@ alias gco='git checkout'
 # [[ "$TMUX" == "" ]] && {tmux new-session -s tmux}  # tmux
 alias tm="tmux new-session -s tmux"
 alias ktm="tmux kill-server"
+# WSL
+alias clip="/mnt/c/Windows/System32/clip.exe"
 
 # python environment
 export PATH="$HOME/.poetry/bin:$PATH"  # poetry
