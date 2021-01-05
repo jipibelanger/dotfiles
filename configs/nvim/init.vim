@@ -18,12 +18,13 @@ if dein#load_state('~/.cache/dein')
   call dein#add('tpope/vim-fugitive')
   call dein#add('mhinz/vim-signify')
   call dein#add('w0rp/ale')
-  call dein#add('Vigemus/iron.nvim')
+  call dein#add('hkupty/iron.nvim')
   call dein#add('roxma/nvim-yarp')
   call dein#add('ncm2/ncm2')
   call dein#add('ncm2/ncm2-path')
   call dein#add('ncm2/ncm2-jedi', {'on_ft': ['python']})
   call dein#add('ncm2/ncm2-racer', {'on_ft': ['rust']})
+  call dein#add('ncm2/ncm2-pyclang', {'on_ft': ['cpp', 'hpp']})
   call dein#add('vimscript/toml', {'on_ft': ['toml']})
   call dein#add('godlygeek/tabular')
   call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown']})
@@ -208,5 +209,8 @@ nnoremap <silent> <F2> :NERDTree<CR>
 " ncm2
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
+
+" ncm2-pyclang
+let g:ncm2_pyclang#library_path = '/usr/lib/x86_64-linux-gnu/libclang-10.so.1'
 
 " }}}
