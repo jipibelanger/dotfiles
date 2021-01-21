@@ -105,5 +105,8 @@ alias clip="/mnt/c/Windows/System32/clip.exe"
 # python environment
 export PATH="$HOME/.poetry/bin:$PATH"  # poetry
 
+# rust environment
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/library"
+
 # project(s) aliases
 alias pj="cd ~/workspaces/resolve/sentinel/market_data"
